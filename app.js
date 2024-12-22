@@ -9,12 +9,12 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Middleware setup
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-// Set EJS as the view engine
+
 app.set('view engine', 'ejs');
 
 // Routes
@@ -27,7 +27,7 @@ app.get('/about', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    const pythonProcess = spawn('python3', ['code.py']); // Ensure 'python3' is used for Python 3 compatibility
+    const pythonProcess = spawn('python3', ['code.py']);
 
     const inputData = {
         'age': parseFloat(req.body.age),
@@ -44,32 +44,32 @@ app.post('/', (req, res) => {
     pythonProcess.stdin.end();
 
     let output = '';
-    let errorOutput = '';
 
     pythonProcess.stdout.on('data', (data) => {
         output += data.toString();
     });
 
     pythonProcess.stderr.on('data', (data) => {
-        errorOutput += data.toString();
+        console.error(`Python error: ${data}`);
     });
+
     pythonProcess.on('close', (code) => {
         if (code === 0) {
             try {
-                const parsedOutput = JSON.parse(output.trim()); // Parse the JSON output
-                res.render('success', { result: parsedOutput }); // Render success page with results
+                const parsedOutput = JSON.parse(output.trim()); 
+                res.render('success', { result: parsedOutput }); 
             } catch (error) {
                 console.error('Error parsing Python output:', error);
-                console.error('Error output:', errorOutput); // Log the error from stderr
-                res.render('failure', { message: 'Error parsing result from Python.' }); // Render failure page in case of parsing issues
+                res.render('failure');
             }
         } else {
             console.error(`Python process exited with code: ${code}`);
-            console.error('Error output:', errorOutput); // Log the error output from Python
-            res.render('failure', { message: 'Error in Python script execution.' }); // Render failure page for non-zero exit codes
+            res.render('failure');
         }
     });
 });
+
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
