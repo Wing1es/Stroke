@@ -1,4 +1,5 @@
 import sys
+print(f"Python version: {sys.version}")
 import json
 import pandas as pd
 import numpy as np
