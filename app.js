@@ -40,23 +40,19 @@ app.post('/', (req, res) => {
         'smoking_status': parseInt(req.body.smoke),
     };
 
-    // Send input data to the Python process
     pythonProcess.stdin.write(JSON.stringify(inputData));
     pythonProcess.stdin.end();
 
     let output = '';
+    let errorOutput = '';
 
-    // Capture standard output from the Python process
     pythonProcess.stdout.on('data', (data) => {
         output += data.toString();
     });
 
-    // Capture errors from the Python process
     pythonProcess.stderr.on('data', (data) => {
-        console.error(`Python error: ${data}`);
+        errorOutput += data.toString();
     });
-
-    // Handle the process completion
     pythonProcess.on('close', (code) => {
         if (code === 0) {
             try {
@@ -64,16 +60,16 @@ app.post('/', (req, res) => {
                 res.render('success', { result: parsedOutput }); // Render success page with results
             } catch (error) {
                 console.error('Error parsing Python output:', error);
-                res.render('failure'); // Render failure page in case of parsing issues
+                console.error('Error output:', errorOutput); // Log the error from stderr
+                res.render('failure', { message: 'Error parsing result from Python.' }); // Render failure page in case of parsing issues
             }
         } else {
             console.error(`Python process exited with code: ${code}`);
-            res.render('failure'); // Render failure page for non-zero exit codes
+            console.error('Error output:', errorOutput); // Log the error output from Python
+            res.render('failure', { message: 'Error in Python script execution.' }); // Render failure page for non-zero exit codes
         }
     });
 });
-
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
