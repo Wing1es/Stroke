@@ -1,0 +1,195 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.6;
+  color: #333;
+  padding-top: 80px;
+}
+
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  text-align: left;
+  margin-right: auto;
+}
+
+.nav-link {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+  margin-right: 1.5rem;
+}
+
+.nav-link:hover {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+
+.container {
+  margin-top: 200px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-width: 900px;
+}
+
+.explain {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+h3 {
+  color: #343a40;
+  font-size: 1.75rem;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 5px;
+  display: block;
+}
+
+h1, h2 {
+  font-weight: 600;
+}
+
+.textbox,
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.textbox:focus,
+.form-control:focus {
+  border-color: grey;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #0d6efd;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0b5ed7;
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  .explain h3 {
+    font-size: 1.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+    text-align: left;
+  }
+}
+
+.navbar-collapse{
+  margin-left: 5rem;
+}
+
+.imaging {
+  height: auto;
+  max-height: 45px;
+  margin-left: 2rem;
+}
+
+@media (max-width: 880px) {
+  .imaging {
+    max-height: 38px;
+    margin-left: 0.5%;
+  }
+
+  .navbar-brand {
+    margin-left: 2%;
+  }
+
+  .navbar-collapse {
+    margin-left: 2.8rem;
+  }
+}
+
+a.btn {
+  text-decoration: none;
+}
+
+.footer {
+  text-align: center;
+  background-color: #343a40;
+  color: white;
+  padding: 10px 0;
+  font-size: 1.1rem;
+}
+
+.footer-padding {
+  flex-grow: 1;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.foot{
+  color: white;
+}
+
+.footer-padding{
+  margin-top: 40px;
+}
+@media (max-width:916px){
+  body{
+    padding-top: 0;
+  }
+  .footer-padding{
+    margin-top: 0;
+  }
+}
+
+.fa-brands{
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+}

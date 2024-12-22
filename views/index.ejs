@@ -1,0 +1,80 @@
+<%- include('partials/header') -%>
+<div class="container mt-5 pt-5" id="test">
+  <h2>User Data Form</h2>
+  <form id="healthForm" action="/" method="post">
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select class="form-control" id="gender" name="gen" required>
+          <option value="">Select...</option>
+          <option value="1">Male</option>
+          <option value="0">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input class="form-control" type="number" id="age" name="age" min="0" max="100" required>
+      </div>
+      <div class="form-group">
+        <label for="hypertension">Hypertension</label>
+        <select class="form-control" id="hypertension" name="hyper" required>
+          <option value="">Select...</option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="heartDisease">Heart Disease</label>
+        <select class="form-control" id="heartDisease" name="heart" required>
+          <option value="">Select...</option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="everMarried">Ever Married</label>
+        <select class="form-control" id="everMarried" name="marry" required>
+          <option value="">Select...</option>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="workType">Work Type</label>
+        <select class="form-control" id="workType" name="work" required>
+          <option value="">Select...</option>
+          <option value="3">Government</option>
+          <option value="0">Private</option>
+          <option value="1">Self-employed</option>
+          <option value="2">Children</option>
+          <option value="4">Never Worked</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="residenceType">Residence Type</label>
+        <select class="form-control" id="residenceType" name="resd" required>
+          <option value="">Select...</option>
+          <option value="1">Urban</option>
+          <option value="0">Rural</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="avgGlucoseLevel">Average Glucose Level</label>
+        <input class="form-control" type="number" id="avgGlucoseLevel" name="avgg" step="0.1" required>
+      </div>
+      <div class="form-group">
+        <label for="bmi">BMI</label>
+        <input class="form-control" type="number" id="bmi" name="bmi" step="0.1" required>
+      </div>
+      <div class="form-group">
+        <label for="smokingStatus">Smoking Status</label>
+        <select class="form-control" id="smokingStatus" name="smoke" required>
+          <option value="">Select...</option>
+          <option value="1">Never Smoked</option>
+          <option value="0">Former Smoker</option>
+          <option value="2">Currently Smokes</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
+<%- include('partials/footer') %>

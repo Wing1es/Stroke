@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stroke Predictor</title>
+  <link rel="icon" href="/favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+.container h1 {
+  color: #28a745;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.alert-heading {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.result-output {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.container a.btn {
+  font-size: 1.1rem;
+  padding: 10px 20px;
+}
+
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <img  class="imaging" src="/Picture1.png" alt="Brain.jpg">
+      <a class="navbar-brand" href="/">StrokeInsights</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="../about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#scroll">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">User Data Form</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <%- include('partials/header') %>
+
+  <div class="container mt-5 pt-5">
+    <h1 class="text-success">Prediction Result</h1>
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Done!</h4>
+      <p>Your stroke risk prediction has been successfully calculated.</p>
+      <p><strong>Result:</strong></p>
+      <pre class="result-output">
+        Average Probability: <%= result.average_probability %>
+        Risk Level: <%= result.rainbow_level %>
+        Risk Percentage: <%= result.percentage_risk.toFixed(2) %>%
+      </pre>
+  
+      <!-- Risk scale (visual representation) -->
+      <div class="risk-scale-container">
+        <div class="risk-label-container">
+          <span class="risk-label red">Very Low Risk</span>
+          <span class="risk-label orange">Low Risk</span>
+          <span class="risk-label yellow">Moderate Risk</span>
+          <span class="risk-label green">Moderate-High Risk</span>
+          <span class="risk-label blue">High Risk</span>
+          <span class="risk-label violet">Very High Risk</span>
+        </div>
+  
+        <div class="risk-scale">
+          <div class="risk-bar" style="width: <%= result.percentage_risk %>%; background: linear-gradient(to right, #28a745, #8a2be2);">
+            <span class="risk-percentage"><%= result.percentage_risk.toFixed(2) %>%</span>
+          </div>
+        </div>
+      </div>
+      <a href="/" class="btn btn-dark mt-3">Go Back</a>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+  
+  <style>
+    .risk-scale-container {
+      position: relative;
+      width: 100%;
+      margin-top: 30px;
+    }
+  
+    .risk-label-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+  
+    .risk-label {
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  
+    .risk-label.red { color: #d9534f; }
+    .risk-label.orange { color: #f0ad4e; }
+    .risk-label.yellow { color: #ffcc00; }
+    .risk-label.green { color: #5bc0de; }
+    .risk-label.blue { color: #007bff; }
+    .risk-label.violet { color: #8a2be2; }
+  
+    .risk-scale {
+      width: 100%;
+      height: 30px;
+      background-color: #e0e0e0;
+      border-radius: 15px;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .risk-bar {
+      height: 100%;
+      border-radius: 15px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      line-height: 30px;
+      position: relative;
+      transition: width 1s ease-in-out;
+    }
+  
+    .risk-percentage {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0.8;
+    }
+  </style>
+  
