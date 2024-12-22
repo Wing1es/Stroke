@@ -1,5 +1,4 @@
 import sys
-print(f"Python version: {sys.version}")
 import json
 import pandas as pd
 import numpy as np
@@ -10,7 +9,11 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-# Load the dataset
+# Wrap main logic in try-except to catch errors and output them as JSON
+try:
+    # Main code (e.g., data loading, preprocessing, model predictions)
+    # Assuming the rest of your logic goes here...
+    # Load the dataset
 def load_and_preprocess_data(file_path):
     df = pd.read_csv(file_path)
 
@@ -138,8 +141,17 @@ if __name__ == "__main__":
         input_data["smoking_status"]
     ]
 
-    # Predict stroke risk
+
+    # Output the result as JSON
+    print(json.dumps(result))
     result = predict_stroke(formatted_input, models, scaler, feature_columns)
 
     # Output the result as JSON
     print(json.dumps(result))
+
+except Exception as e:
+    # Catch any errors and print them as JSON to stderr
+    error_message = {"error": str(e)}
+    print(json.dumps(error_message), file=sys.stderr)
+
+
