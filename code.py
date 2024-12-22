@@ -91,18 +91,14 @@ def predict_stroke(input_data, models, scaler, feature_columns):
     percentage_risk = average_probability * 100
 
     # Rainbow level based on the probability
-    if average_probability < 0.2:
-        rainbow_level = "Red (Very Low Risk)"
-    elif average_probability < 0.3:
-        rainbow_level = "Orange (Low Risk)"
+    if average_probability < 0.3:
+        rainbow_level = "Low Risk"
     elif average_probability < 0.4:
-        rainbow_level = "Yellow (Moderate Risk)"
-    elif average_probability < 0.6:
-        rainbow_level = "Green (Moderate-High Risk)"
+        rainbow_level = "Moderate Risk"
     elif average_probability < 0.9:
-        rainbow_level = "Blue (High Risk)"
+        rainbow_level = "High Risk"
     else:
-        rainbow_level = "Violet (Very High Risk)"
+        rainbow_level = "Very High Risk"
 
     # Return the result with both average probability and percentage risk
     result = {
