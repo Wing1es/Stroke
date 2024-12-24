@@ -1,6 +1,6 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 import bodyParser from 'body-parser';
 import { spawn } from 'child_process';
 import ejs from 'ejs';
@@ -17,6 +17,35 @@ app.use(express.static("./public"));
 
 app.set('view engine', 'ejs');
 
+function trainModel() {
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('python3', ['models/model.py']);
+
+        pythonProcess.stdout.on('data', (data) => {
+            console.log(`Model.py output: ${data}`);
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Model.py error: ${data}`);
+        });
+
+        pythonProcess.on('close', (code) => {
+            if (code === 0) {
+                console.log('Model training completed successfully.');
+                resolve();
+            } else {
+                reject(new Error(`Model training failed with exit code ${code}`));
+            }
+        });
+    });
+}
+
+function fillUp(value, length) {
+    const arr = new Array(length).fill(0);
+    if (value >= 0 && value < length) arr[value] = 1;
+    return arr;
+}
+
 // Routes
 app.get('/', (req, res) => {
     res.render("index");
@@ -27,17 +56,34 @@ app.get('/about', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    const pythonProcess = spawn('python3', ['code.py']);
+    const pythonProcess = spawn('python3', ['models/predict.py']);
+
+    const gender = fillUp(parseInt(req.body.gen), 2);
+    const residence = fillUp(parseInt(req.body.resd), 2);
+    const married = fillUp(parseInt(req.body.marry), 2);
+    const workType = fillUp(parseInt(req.body.work), 5);
+    const smokingStatus = fillUp(parseInt(req.body.smoke), 3);
 
     const inputData = {
         'age': parseFloat(req.body.age),
-        'gender': parseInt(req.body.gen),
-        'ever_married': parseInt(req.body.marry),
-        'Residence_type': parseInt(req.body.resd),
+        'hypertension': parseInt(req.body.hyper),
+        'heart_disease': parseInt(req.body.heart),
         'avg_glucose_level': parseFloat(req.body.avgg),
         'bmi': parseFloat(req.body.bmi),
-        'work_type': parseInt(req.body.work),
-        'smoking_status': parseInt(req.body.smoke),
+        'Rural': residence[0],
+        'Urban': residence[1],
+        'Male': gender[1],
+        'Female': gender[0],
+        'Yes': married[1],
+        'No': married[0],
+        'Private': workType[0],
+        'Self_employed': workType[1],
+        'children': workType[2],
+        'Govt_job': workType[3],
+        'Never_worked': workType[4],
+        'formerly_smoked': smokingStatus[0],
+        'never_smoked': smokingStatus[1],
+        'smokes': smokingStatus[2]
     };
 
     pythonProcess.stdin.write(JSON.stringify(inputData));
@@ -69,8 +115,15 @@ app.post('/', (req, res) => {
     });
 });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Train model and Start the server
+trainModel()
+    .then(() => {
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('Failed to train the model:', err);
+        process.exit(1);
+    });
