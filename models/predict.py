@@ -40,9 +40,9 @@ average_probability = probabilities[0][1]
 
 if average_probability < 0.3:
     rainbow_level = "Low Risk"
-elif average_probability < 0.4:
+elif average_probability < 0.6:
     rainbow_level = "Moderate Risk"
-elif average_probability < 0.9:
+elif average_probability < 0.8:
     rainbow_level = "High Risk"
 else:
     rainbow_level = "Very High Risk"
